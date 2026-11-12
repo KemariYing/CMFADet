@@ -1,0 +1,38 @@
+# Runtime dependencies for the CMFADet fork (upstream repository ships NO requirements.txt).
+#
+# IMPORTANT
+#   1) torch / torchvision must be installed FIRST and must match the CUDA toolkit of the
+#      training machine. The paper used PyTorch 2.1.0 (CUDA 11.8 is a safe choice):
+#          pip install torch==2.1.0 torchvision==0.16.0 --index-url https://download.pytorch.org/whl/cu118
+#   2) mmcv is a HARD requirement even though the import in ultralytics/nn/extra_modules/block.py
+#      is wrapped in try/except: OBB_ATAH -> DyDCNv2 needs mmcv's ModulatedDeformConv2d, and a
+#      missing mmcv shows up as `NameError: ModulatedDeformConv2d` while building the model.
+#      Install a wheel matching your torch/CUDA, e.g. for cu118 + torch2.1.0:
+#          pip install mmengine
+#          pip install mmcv==2.1.0 -f https://download.openmmlab.com/mmcv/dist/cu118/torch2.1/index.html
+#   3) Python 3.10 is what the released binaries (.pyc / .so) were built with.
+
+# --- core (install torch/torchvision separately, see above) ---
+numpy<2
+opencv-python>=4.6
+pillow>=9.0
+pyyaml>=6.0
+matplotlib>=3.3
+pandas>=1.5
+seaborn>=0.12
+scipy>=1.8
+psutil
+tqdm
+requests
+dill>=0.3.7
+einops
+timm==0.9.16
+thop
+prettytable          # used by val.py
+efficientnet-pytorch # imported at module level by ultralytics/nn/extra_modules/attention.py
+
+# --- mmcv stack (required by the ATAH head) ---
+mmengine>=0.10,<0.11
+# mmcv is intentionally NOT pinned here: it must be installed from the wheel index that
+# matches your torch/CUDA build, otherwise pip tries to compile it from source, e.g.:
+#     pip install mmcv==2.1.0 -f https://download.openmmlab.com/mmcv/dist/cu118/torch2.1/index.html

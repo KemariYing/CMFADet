@@ -1,0 +1,25 @@
+# Train/val/test sets as 1) dir: path/to/imgs, 2) file: path/to/imgs.txt, or 3) list: [path/to/imgs1, path/to/imgs2, ..]
+# DroneVehicle (RGB-IR, OBB).  Relative paths are resolved against THIS yaml's directory,
+# so keep `datasets/DroneVehicle/OBBCrop` next to `dataset/` when copying the project.
+# NOTE: the RGB folder MUST be named `images`, the IR folder MUST be named `image`
+# (BaseDataset.load_image finds the IR image with path.replace('images', 'image')),
+# and the labels must be in a sibling folder named `labels` (img2label_paths()).
+
+## RGB images
+train: ../datasets/DroneVehicle/OBBCrop/images/train # train images
+val: ../datasets/DroneVehicle/OBBCrop/images/val # val images
+test : ../datasets/DroneVehicle/OBBCrop/images/test # test images
+
+## Infrared images
+train_ir: ../datasets/DroneVehicle/OBBCrop/image/train # train images
+val_ir: ../datasets/DroneVehicle/OBBCrop/image/val # val images
+test_ir: ../datasets/DroneVehicle/OBBCrop/image/test # test images
+
+# Classes (order == class id used in the label .txt files)
+nc: 5
+names:
+  0: car
+  1: truck
+  2: bus
+  3: van
+  4: freight_car

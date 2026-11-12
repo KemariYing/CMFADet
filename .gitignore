@@ -1,0 +1,33 @@
+# ---- datasets / weights (never commit) ----
+/datasets/
+/runs/
+*.pt
+*.pth
+*.onnx
+*.engine
+*.cache
+
+# ---- raw DroneVehicle dumps (if someone extracts them inside the project root) ----
+/train/
+/val/
+/test/
+
+# ---- python ----
+__pycache__/
+*.py[cod]
+
+# ---- build artifacts shipped in the original zip (linux .so/.o/.egg) ----
+/ultralytics/nn/extra_modules/DCNv4_op/build/
+/ultralytics/nn/extra_modules/DCNv4_op/dist/
+/ultralytics/nn/extra_modules/ops_dcnv3/build/
+/ultralytics/nn/extra_modules/ops_dcnv3/dist/
+*.egg-info/
+*.egg
+*.so
+*.o
+*.pyd
+
+# ---- misc ----
+*.log
+.DS_Store
+Thumbs.db
