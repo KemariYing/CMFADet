@@ -232,8 +232,8 @@ python tools/smoke_val.py --n 8 --imgsz 640 --batch 2 --device 0
 
 | 目录 | epochs | batch | 内容 |
 |---|---|---|---|
-| `runs/DV/train/CMFADet-640` | 10 | 8 | 首次试跑，仅保留 `args.yaml`、`labels*.jpg`、`train_batch*.jpg` |
-| `runs/DV/train/CMFADet-6402` | 10 | 32 | batch=32 对照（看 batch 对吞吐/收敛的影响） |
+| `runs/DV/train/CMFADet-640` | 10 | 8 | 首次试跑，仅保留 `args.yaml`、`labels*.jpg`、`train_batch*.jpg` (已删除)|
+| `runs/DV/train/CMFADet-6402` | 10 | 32 | batch=32 对照（看 batch 对吞吐/收敛的影响） (已删除)|
 | `runs/DV/train/CMFADet-6403` | 10 | 8 | **完整**：`weights/`（best/last，FP16+FP32）、`results.csv`、`results.png`、PR/P/R/F1 曲线、混淆矩阵、val 可视化 |
 
 `CMFADet-6403` 第 10 轮（val 划分，`results.csv` 末行）：
