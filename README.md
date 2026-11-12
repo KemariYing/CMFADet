@@ -1,4 +1,4 @@
-﻿# CMFADet · DroneVehicle 复现工程
+# CMFADet · DroneVehicle 复现工程
 
 > 论文：*A Cross-Modality Feature Adaptive Interaction Approach for RGB-Infrared Object Detection in Aerial Imagery*（IEEE TGRS 2026）
 > 本仓库是作者代码的**可运行复现版**：修复了若干阻塞训练/评估的问题，补齐了数据转换、冒烟测试与文档。**不包含数据集与权重**。
@@ -216,12 +216,37 @@ python tools/smoke_val.py --n 8 --imgsz 640 --batch 2 --device 0
 ├── REPRODUCE_DroneVehicle.md # 详细复现/排错文档
 ├── dataset/                  # 数据 yaml（data_DV_Multimodel.yaml 等）
 ├── datasets/                 # 【不提交】转换后的 DroneVehicle
+├── runs/DV/train/            # 短程训练快照（见 §10）
 ├── tools/
 │   ├── prepare_dronevehicle.py   # 原始数据 → YOLO-OBB
 │   ├── smoke_test.py             # 建模型 + 建数据集 + 前向/loss
 │   └── smoke_val.py              # 验证链路冒烟
 └── ultralytics/              # 作者代码（含自定义模块），未改动结构
 ```
+
+---
+
+## 10. 附：实验记录（`runs/`）
+
+仓库里保留了 3 次短程训练（A10，每次 10 epoch）的快照，用来证明链路可跑、并给后续长训做参照：
+
+| 目录 | epochs | batch | 内容 |
+|---|---|---|---|
+| `runs/DV/train/CMFADet-640` | 10 | 8 | 首次试跑，仅保留 `args.yaml`、`labels*.jpg`、`train_batch*.jpg` |
+| `runs/DV/train/CMFADet-6402` | 10 | 32 | batch=32 对照（看 batch 对吞吐/收敛的影响） |
+| `runs/DV/train/CMFADet-6403` | 10 | 8 | **完整**：`weights/`（best/last，FP16+FP32）、`results.csv`、`results.png`、PR/P/R/F1 曲线、混淆矩阵、val 可视化 |
+
+`CMFADet-6403` 第 10 轮（val 划分，`results.csv` 末行）：
+
+```
+P 0.5561 | R 0.6025 | mAP50 0.5770 | mAP50-95 0.4314
+val loss: box 0.8094 / cls 0.6704 / dfl 1.7805
+```
+
+> 10 轮即到 57.7 mAP50，趋势正常；按论文 300 轮还有较大提升空间（目标 83.4）。
+> 这些只是短跑记录，**不是**论文复现结果。
+
+仓库只为这些快照放开了 `runs/**/*.pt`（`.gitignore` 里的负向规则），其它位置的 `*.pt` 仍被忽略，避免误传大权重。
 
 ---
 

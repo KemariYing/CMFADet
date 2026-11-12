@@ -1,11 +1,12 @@
 # ---- datasets / weights (never commit) ----
 /datasets/
-/runs/
 *.pt
 *.pth
 *.onnx
 *.engine
 *.cache
+# ...except the small run snapshots we do want to publish
+!/runs/**/*.pt
 
 # ---- raw DroneVehicle dumps (if someone extracts them inside the project root) ----
 /train/
